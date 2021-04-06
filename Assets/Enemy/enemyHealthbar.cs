@@ -16,18 +16,12 @@ If both GameObjects have Collider.isTrigger enabled, no collision happens. The s
 public class enemyHealthbar : MonoBehaviour
 {
     public Slider healthSlider;
-
     public float maxHealth;
-
     public float currentHealthEnemy;
-
     public float damage = 10;
-
     public bool enemyDestroyed;
-
-    
-    // put an enemy in the inspector here
     public GameObject enemy;
+    public GameObject fxIsHit;
 
     private Animator anim;
 
@@ -85,10 +79,17 @@ public class enemyHealthbar : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("Hit");
+
         if (other.gameObject.CompareTag("Damage") )
         {
             currentHealthEnemy = currentHealthEnemy - damage;
+            //FX//
+            Instantiate(fxIsHit, enemy.transform.position, Quaternion.identity);
+            //stop fx // 
+
             Debug.LogError("DAMAGE TAKEN");
+            //destroy gameobject bullet when hit 
+            
         }
     }
 

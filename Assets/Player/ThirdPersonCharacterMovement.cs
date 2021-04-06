@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class ThirdPersonCharacterMovement : MonoBehaviour
 {
     public CharacterController controller;
@@ -16,7 +16,7 @@ public class ThirdPersonCharacterMovement : MonoBehaviour
     //Vitesse de saut
     public float jumpHeight = 8f;
     //Gravité
-    float gravity = 20f;
+   public float gravity;
  //Déplacement
     Vector3 moveDirection;
 

@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerShoot : MonoBehaviour
 {
     public GameObject bullet;
+    private GameObject projectile;
     public Transform spawnpoint;
     public float projectilespeed;
     public Camera camera;
@@ -11,36 +12,35 @@ public class PlayerShoot : MonoBehaviour
     public GameObject shield;
     GameObject bouclier;
 
-    // timer bullet // 
-    public float timeToDestroy = 10;
-    public float timeToDestroyUp;
     // test ienumerator cooldown // 
     private bool canShield = true;
+    private bool canAttack = true;
     public float shieldCooldown;
+    public float attackCooldown;
+    public float destroyProjectile;
+
     void Start()
     {
-        timeToDestroyUp = 1;
+       
     }
     void Update()
     {
-        timeToDestroyUp++;
-       // Debug.Log(timeToDestroyUp);
+        // détruire balle après x secondes // 
+        Invoke("DestroyProjectile", destroyProjectile);
+      
             //fire ball // 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1")&& canAttack==true)
             {
                 charaanim.GetComponent<Animator>().Play("fire");
-                GameObject projectile = Instantiate(bullet, spawnpoint.position, spawnpoint.rotation);
+                projectile = Instantiate(bullet, spawnpoint.position, spawnpoint.rotation);
                 Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
                 projectileRigidbody.AddForce(camera.transform.forward * projectilespeed);
-           
-
+                canAttack = false;
+                StartCoroutine(AttackCooldown());
 
             }
          
-        if (timeToDestroyUp>=timeToDestroy)
-        {
-            Destroy(bullet);
-        }
+      
         // Bouclier // 
         if (Input.GetButtonDown("Fire2")&& canShield==true) // active // 
         {
@@ -57,12 +57,19 @@ public class PlayerShoot : MonoBehaviour
 
    
 
-
     // Cooldowns 
     public IEnumerator Cooldown()
     {
         yield return new WaitForSeconds(shieldCooldown);
         canShield = true;
     }
-    
+    public IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
+    }
+    void DestroyProjectile()
+    {
+        Destroy(projectile);
+    }
 }

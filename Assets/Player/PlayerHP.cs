@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 public class PlayerHP : MonoBehaviour
 {
     public int currenthp;
     public int maxHealth;
     public bool playerDestroyed;
+    public Image healthbar;
 
     // buttons // 
     [SerializeField]
@@ -17,11 +20,14 @@ public class PlayerHP : MonoBehaviour
     private GameObject BackgroundDeath;
     [SerializeField]
     private GameObject textDead;
+        
+    
     void Start()
     {
         currenthp = maxHealth;
         playerDestroyed = false;
         Debug.Log(currenthp);
+       
     }
 
     // Update is called once per frame
@@ -67,15 +73,15 @@ void OnTriggerEnter(Collider other)
     {
     Destroy(gameObject);
     playerDestroyed = true;
-    // load death scene or display button for respawn 
+    
     
     }
-
 
     public void takeLowDammage()
     {
         int dammage = 1;
         currenthp = currenthp - dammage;
+        healthbar.fillAmount -= dammage;
     }
     public void instantKill()
     {

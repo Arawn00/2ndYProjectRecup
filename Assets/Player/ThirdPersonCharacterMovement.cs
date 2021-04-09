@@ -40,17 +40,7 @@ controller = gameObject.GetComponent<CharacterController>();
           //charaanim.GetComponent<Animator>().Play("run");
          //}
 
-        
-
-
-
-
-
-
-
-
-
-
+     
 
         if (direction.magnitude>=0.1f)
         {
